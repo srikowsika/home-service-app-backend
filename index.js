@@ -20,3 +20,7 @@ app.use(cors());
 app.use('/services',serviceRoutes);
 app.use("/city", cityRoutes);
 app.use('/order', orderRoutes);
+app.use('/', (req, res) => {
+  console.log("new route")
+  res.send('hello world')
+})
