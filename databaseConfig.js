@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const connectionString = "mongodb://ec2-3-110-142-179.ap-south-1.compute.amazonaws.com:27017/"//"mongodb://127.0.0.1:27017";
+const connectionString = "http://mongodb://ec2-3-110-142-179.ap-south-1.compute.amazonaws.com:27017/"//"mongodb://127.0.0.1:27017";
 let client = new MongoClient(connectionString);
 let database;
 
