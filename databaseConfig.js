@@ -6,7 +6,7 @@ let database;
 async function run() {
   try {
     console.log("paakj");
-    database = client.db("home-service-app");
+    database = client.db("home-service-app-database");
     //  console.log(database
     //  let options = {sort: { title: 1 }};
     // Include only the `title` and `imdb` fields in each returned document

@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
       console.log(docs);
       callback(docs);
     });
-  // console.log(cities);
+  console.log(cities);
   res.status(200).json(cities);
 });
 
