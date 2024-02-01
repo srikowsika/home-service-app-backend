@@ -11,7 +11,7 @@ router.get('/', async (req, res) =>  {
     console.log("ppsp");
     // let database = await run().catch();
     let services = await database
-      .collection("serviceCategory")
+      .collection("services")
       .find({})
       .toArray((err, docs) => {
         console.log(docs);
@@ -29,7 +29,7 @@ router.get("/serviceDetails/:serviceId", async (req, res) => {
   console.log(req.params);
   // let database = await run().catch();
   let services = await database
-    .collection("serviceCatelog")
+    .collection("subServices")
     .find({ serviceId : parseInt(req.params.serviceId)})
     .toArray((err, docs) => {
       console.log(docs);

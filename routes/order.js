@@ -7,43 +7,50 @@ const database = require("../databaseConfig.js");
 var service;
 
 router.get("/", async (req, res) => {
-  // app.get("/services", async (req, res) => {
-  console.log("ppsp");
-  // let database = await run().catch();
   let orderList = await database
     .collection("order")
     .find({})
     .toArray((err, docs) => {
-      console.log(docs);
-      // return "docs" array
       callback(docs);
     });
-  // console.log(services);
   res.status(200).json(orderList);
-  // });
+});
+
+router.delete("/deleteBooking/:id", async (req, res) => {
+  // console.log(req.params)
+  let orderList = await database
+    .collection("order")
+    .find({})
+    .toArray((err, docs) => {
+      callback(docs);
+    });
+  res.status(200).json(orderList);
 });
 
 router.post("/addOrder", async (req, res) => {
-  console.log(req.body);
-  let order = await database
+  let order = {};
+  await (req.body.orderedItem || []).map(async (orderIt, index) =>  {
+    order = await database
     .collection("order")
-    .insertOne({orderedItem: req.body.orderedItem, orderDate: req.body.confirmDate, address: "Flat 123, Block 8, Attah Nagar, Bangalore"}, (err, docs) => {
-      console.log(docs);
+    .insertOne({orderedItem: orderIt, orderDate: req.body.confirmDate, address: "Flat 123, Block 8, Attah Nagar, Bangalore"}, (err, docs) => {
       callback(docs);
     });
-  console.log(order);
-  if(order.acknowledged && order.insertedId != "")
-  {
-    let resObj = {
-        message: "Service Scheduled Successfully!",
-        success: true
+    if(index == req.body.orderedItem.length - 1) {
+      let resObj = {}
+      if(order.acknowledged && order.insertedId != "")
+      {
+         resObj = {
+            message: "Service Scheduled Successfully!",
+            success: true
+        }
+        res.status(200).json(resObj);
+      } else{
+        resObj = {message: "Failed to schedule the service", success: false};
+        res.status(200).json(resObj);
+      }
     }
-    console.log(resObj)
-    res.status(200).json(resObj);
-  } else{
-    res.status(200).json({message: "Failed to schedule the service", success: false});
-  }
-  // });
+  })
+  
 });
 
 module.exports = router;
